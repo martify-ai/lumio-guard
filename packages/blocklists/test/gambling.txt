@@ -1,0 +1,4 @@
+# TEST LIST ONLY. Fake domains on the reserved .test TLD.
+betting-example.test
+casino-example.test
+sports-bet-example.test

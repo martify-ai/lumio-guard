@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lumio Guard</title>
+  <link rel="stylesheet" href="ui.css">
+  <style>
+    body { width: 340px; padding: 16px; }
+    .card + .card { margin-top: 12px; }
+    #categories { list-style: none; padding: 0; margin: 8px 0 0; }
+    #categories li { display: flex; justify-content: space-between; margin: 0; padding: 6px 0; color: var(--text-strong); }
+  </style>
+</head>
+<body>
+  <div class="row" style="margin-bottom:12px">
+    <span class="brand">Lumio Guard</span>
+    <span id="state" class="pill">Checking…</span>
+  </div>
+
+  <div class="card">
+    <h1 id="headline">Checking protection…</h1>
+    <p id="detail"></p>
+    <ul id="categories"></ul>
+    <p id="incognito" class="notice" hidden>
+      Private (Incognito) windows are not protected. To fix this, open Chrome's
+      extension settings for Lumio Guard and turn on "Allow in Incognito".
+    </p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">What Lumio Guard can't do yet</h2>
+    <ul>
+      <li>It only works in this Chrome browser, not other browsers or phone apps.</li>
+      <li>It blocks known sites on its lists. New or unknown sites can get through.</li>
+      <li>It can be turned off from Chrome's extension settings.</li>
+    </ul>
+  </div>
+
+  <p style="margin-top:12px"><button id="open-settings" class="btn outline" style="width:100%">Settings</button></p>
+  <p class="muted">Everything stays on this computer. Lumio Guard sends nothing anywhere.</p>
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

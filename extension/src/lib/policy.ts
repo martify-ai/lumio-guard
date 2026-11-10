@@ -1,0 +1,80 @@
+// Decides which rulesets should be on, from the user's settings.
+// Pure functions only, so they are easy to test.
+
+import { rulesetId, type Mode } from './rules';
+
+export interface Category {
+  id: string;
+  label: string;
+  description: string;
+  defaultOn: boolean;
+}
+
+export interface Settings {
+  /** category id → on/off */
+  categories: Record<string, boolean>;
+  /** user asked for the friendly Lumio block page */
+  friendlyPage: boolean;
+}
+
+export function defaultSettings(categories: Category[]): Settings {
+  return {
+    categories: Object.fromEntries(categories.map((c) => [c.id, c.defaultOn])),
+    friendlyPage: false,
+  };
+}
+
+/** Fill gaps (new categories, missing fields) with defaults. Unknown ids are dropped. */
+export function mergeSettings(categories: Category[], saved: unknown): Settings {
+  const base = defaultSettings(categories);
+  if (!saved || typeof saved !== 'object') return base;
+  const s = saved as Partial<Settings>;
+  for (const c of categories) {
+    const v = s.categories?.[c.id];
+    if (typeof v === 'boolean') base.categories[c.id] = v;
+  }
+  if (typeof s.friendlyPage === 'boolean') base.friendlyPage = s.friendlyPage;
+  return base;
+}
+
+/** Friendly mode only counts when the user wants it AND Chrome granted host access. */
+export function activeMode(settings: Settings, hasHostAccess: boolean): Mode {
+  return settings.friendlyPage && hasHostAccess ? 'page' : 'block';
+}
+
+export interface RulesetChanges {
+  enableRulesetIds: string[];
+  disableRulesetIds: string[];
+}
+
+export function computeRulesetChanges(
+  categories: Category[],
+  settings: Settings,
+  hasHostAccess: boolean,
+): RulesetChanges {
+  const mode = activeMode(settings, hasHostAccess);
+  const enable: string[] = [];
+  const disable: string[] = [];
+  for (const c of categories) {
+    const on = settings.categories[c.id] === true;
+    for (const m of ['block', 'page'] as Mode[]) {
+      (on && m === mode ? enable : disable).push(rulesetId(c.id, m));
+    }
+  }
+  return { enableRulesetIds: enable, disableRulesetIds: disable };
+}
+
+export type ProtectionState = 'on' | 'partial' | 'off' | 'error';
+
+export function protectionState(
+  categories: Category[],
+  settings: Settings,
+  enabledRulesets: string[],
+  hasHostAccess: boolean,
+): ProtectionState {
+  const expected = computeRulesetChanges(categories, settings, hasHostAccess).enableRulesetIds;
+  if (!expected.every((id) => enabledRulesets.includes(id))) return 'error';
+  const onCount = categories.filter((c) => settings.categories[c.id]).length;
+  if (onCount === 0) return 'off';
+  return onCount === categories.length ? 'on' : 'partial';
+}

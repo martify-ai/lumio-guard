@@ -1,0 +1,8 @@
+# TEST LIST ONLY. Fake domains on the reserved .test TLD so the repo holds no real
+# harmful addresses. Real, licensed lists replace these in a later milestone.
+# Formats accepted: plain domains, hosts-file lines, "||domain^" lines.
+adult-example.test
+0.0.0.0 adult-hosts-format.test
+||adult-adblock-format.test^
+WWW.Adult-Uppercase.test.
+adult-ads-network.test

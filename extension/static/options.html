@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lumio Guard settings</title>
+  <link rel="stylesheet" href="ui.css">
+  <style>
+    main { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+    .card { margin-top: 16px; }
+    label strong { display: block; color: var(--text-strong); }
+    label span { color: var(--text-mid); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">Lumio Guard</p>
+    <h1>Settings</h1>
+    <p>Choose what Lumio Guard blocks in this browser. Changes take effect straight away.</p>
+
+    <section class="card">
+      <h2 style="margin-top:0">What to block</h2>
+      <div id="categories"></div>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-top:0">Block message</h2>
+      <label class="toggle">
+        <input type="checkbox" id="friendly">
+        <span>
+          <strong>Show Lumio Guard's friendly message on blocked pages</strong>
+          <span>
+            Without this, Chrome shows its own short "blocked" page. To show our message
+            instead, Chrome needs to give Lumio Guard access to all websites, and will ask you
+            to allow "read and change all your data on all websites". Lumio Guard uses this
+            only to swap a blocked page for its message. It does not read, save or send
+            anything about the sites you visit.
+          </span>
+        </span>
+      </label>
+      <p id="friendly-note" class="muted" hidden></p>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-top:0">Status</h2>
+      <p id="status">Checking…</p>
+    </section>
+
+    <p class="muted" style="margin-top:16px">Everything stays on this computer. Lumio Guard sends nothing anywhere.</p>
+  </main>
+  <script src="options.js" type="module"></script>
+</body>
+</html>

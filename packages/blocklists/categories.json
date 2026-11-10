@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "adult",
+      "label": "Adult content",
+      "description": "Pornography, nudity and sexually explicit sites, including their ads and pop-ups.",
+      "defaultOn": true
+    },
+    {
+      "id": "gambling",
+      "label": "Betting and gambling",
+      "description": "Sports betting, online casinos and similar sites.",
+      "defaultOn": true
+    }
+  ]
+}

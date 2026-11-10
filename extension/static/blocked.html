@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Page not available</title>
+  <link rel="stylesheet" href="ui.css">
+  <style>
+    main { max-width: 560px; margin: 0 auto; padding: 48px 16px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 8px; }
+    details { margin-top: 20px; color: var(--text-mid); }
+    summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--text-strong); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">Lumio Guard</p>
+    <div class="card">
+      <h1>This page isn't available</h1>
+      <p>Lumio Guard stopped this page because it's in the <strong id="category">restricted</strong> group in your protection settings.</p>
+      <p>It happens. Links, ads and pop-ups can send anyone somewhere they didn't mean to go.</p>
+      <div class="actions">
+        <button id="back" class="btn">Go back</button>
+        <button id="new-tab" class="btn outline">Open a new tab</button>
+      </div>
+      <p class="muted">Nothing about this visit was saved or sent anywhere.</p>
+      <details>
+        <summary>Think this was blocked by mistake?</summary>
+        <p>Thank you for checking. Reporting mistakes is coming in a later version of Lumio Guard. For now, nothing has been sent.</p>
+      </details>
+    </div>
+  </main>
+  <script src="blocked.js" type="module"></script>
+</body>
+</html>

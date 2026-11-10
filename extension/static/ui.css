@@ -1,0 +1,78 @@
+/* Lumio Guard shared styles. System fonts only: the extension makes no network calls. */
+:root {
+  --navy: #0D2137;
+  --green: #166534;
+  --amber: #B45309;
+  --red: #991B1B;
+  --bg: #F4F4F5;
+  --surface: #FFFFFF;
+  --border: #D4D4D8;
+  --text-strong: #09090B;
+  --text-mid: #52525B;
+  --text-light: #71717A;
+  --ok-bg: #DCFCE7;
+  --warn-bg: #FEF3C7;
+  --bad-bg: #FEE2E2;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --navy: #E4E4E7;
+    --green: #4ADE80;
+    --amber: #FBBF24;
+    --red: #F87171;
+    --bg: #09090B;
+    --surface: #18181B;
+    --border: #3F3F46;
+    --text-strong: #FAFAFA;
+    --text-mid: #D4D4D8;
+    --text-light: #A1A1AA;
+    --ok-bg: #052E16;
+    --warn-bg: #3A2A05;
+    --bad-bg: #3B0D0D;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-strong);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+h1, h2 { color: var(--navy); line-height: 1.25; margin: 0 0 8px; }
+h1 { font-size: 22px; font-weight: 700; }
+h2 { font-size: 16px; font-weight: 700; margin-top: 20px; }
+p { margin: 0 0 12px; color: var(--text-mid); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.brand { font-weight: 800; color: var(--navy); letter-spacing: 0.2px; }
+.muted { color: var(--text-light); font-size: 13px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 16px;
+  border-radius: 4px; border: 0; cursor: pointer;
+  font: inherit; font-weight: 600;
+  background: var(--green); color: #fff;
+}
+@media (prefers-color-scheme: dark) { .btn { color: #052E16; } }
+.btn.outline { background: transparent; color: var(--text-strong); border: 1.5px solid var(--border); }
+.btn:focus-visible, input:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.pill {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 13px; font-weight: 600;
+}
+.pill.on { background: var(--ok-bg); color: var(--green); }
+.pill.partial { background: var(--warn-bg); color: var(--amber); }
+.pill.off, .pill.error { background: var(--bad-bg); color: var(--red); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.toggle { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--border); }
+.toggle:first-of-type { border-top: 0; }
+.toggle input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--green); flex: none; }
+ul { margin: 0; padding-left: 18px; color: var(--text-mid); }
+li { margin-bottom: 6px; }
+.notice { border-left: 3px solid var(--amber); padding: 8px 12px; background: var(--warn-bg); border-radius: 4px; color: var(--text-strong); }
+[hidden] { display: none !important; }

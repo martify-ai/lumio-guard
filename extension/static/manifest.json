@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Lumio Guard",
+  "version": "0.1.0",
+  "description": "Helps young people stay safe online by blocking known harmful sites. Works on this computer only; sends nothing anywhere.",
+  "minimum_chrome_version": "120",
+  "permissions": ["declarativeNetRequest", "storage"],
+  "optional_host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "Lumio Guard" },
+  "options_page": "options.html",
+  "incognito": "spanning",
+  "declarative_net_request": { "rule_resources": [] },
+  "web_accessible_resources": [
+    { "resources": ["blocked.html", "blocked.js", "ui.css"], "matches": ["<all_urls>"] }
+  ]
+}
