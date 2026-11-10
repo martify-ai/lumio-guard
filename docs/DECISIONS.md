@@ -33,6 +33,16 @@ habit growth are equally part of the product.
 | 60-minute prompt | No lockout in v0 |
 | Fonts in extension | System fonts. v0 must make zero network calls, so no Google Fonts. |
 
+## Safe Search (Milestone 2) — choices made, open to change
+
+| Topic | Choice | Why |
+|---|---|---|
+| Engines covered | Google (187 country sites), Bing, DuckDuckGo, YouTube | The Build Plan named Google, Bing, YouTube. DuckDuckGo added: one simple, documented setting (`kp=1`). Yahoo, Yandex, Brave Search and others are NOT covered. |
+| Google setting | `safe=active` | The Build Plan said `safe=strict`; `active` is the value Google documents. Not yet confirmed against live Google results by a person. |
+| YouTube level | `Strict` | Safest default for young people. It hides comments and many ordinary videos. `Moderate` is the alternative; make this a guardian setting later. |
+| Site access | Asked at install, only for the search/YouTube sites | The Build Plan wants Safe Search on by default. The cost is an install warning listing those sites. |
+| Uncovered search engines | Left reachable | Blocking every other search engine would over-block. Revisit as an optional "only allow safe search engines" setting. |
+
 ## Conflicts found in the Notion workspace (2026-11-08)
 
 1. **MVP scope.** PRD §8 and doc 06 put guardian accounts, sync and dashboard in the MVP.

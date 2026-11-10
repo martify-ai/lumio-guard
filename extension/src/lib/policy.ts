@@ -2,6 +2,7 @@
 // Pure functions only, so they are easy to test.
 
 import { rulesetId, type Mode } from './rules';
+import { SAFESEARCH_RULESET_ID } from './safesearch';
 
 export interface Category {
   id: string;
@@ -15,12 +16,15 @@ export interface Settings {
   categories: Record<string, boolean>;
   /** user asked for the friendly Lumio block page */
   friendlyPage: boolean;
+  /** force safe modes on supported search engines and YouTube */
+  safeSearch: boolean;
 }
 
 export function defaultSettings(categories: Category[]): Settings {
   return {
     categories: Object.fromEntries(categories.map((c) => [c.id, c.defaultOn])),
     friendlyPage: false,
+    safeSearch: true,
   };
 }
 
@@ -34,6 +38,7 @@ export function mergeSettings(categories: Category[], saved: unknown): Settings 
     if (typeof v === 'boolean') base.categories[c.id] = v;
   }
   if (typeof s.friendlyPage === 'boolean') base.friendlyPage = s.friendlyPage;
+  if (typeof s.safeSearch === 'boolean') base.safeSearch = s.safeSearch;
   return base;
 }
 
@@ -61,6 +66,7 @@ export function computeRulesetChanges(
       (on && m === mode ? enable : disable).push(rulesetId(c.id, m));
     }
   }
+  (settings.safeSearch ? enable : disable).push(SAFESEARCH_RULESET_ID);
   return { enableRulesetIds: enable, disableRulesetIds: disable };
 }
 
@@ -75,6 +81,6 @@ export function protectionState(
   const expected = computeRulesetChanges(categories, settings, hasHostAccess).enableRulesetIds;
   if (!expected.every((id) => enabledRulesets.includes(id))) return 'error';
   const onCount = categories.filter((c) => settings.categories[c.id]).length;
-  if (onCount === 0) return 'off';
-  return onCount === categories.length ? 'on' : 'partial';
+  if (onCount === 0 && !settings.safeSearch) return 'off';
+  return onCount === categories.length && settings.safeSearch ? 'on' : 'partial';
 }

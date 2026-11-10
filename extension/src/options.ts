@@ -8,9 +8,9 @@ import {
 } from './lib/extension';
 
 const STATUS_TEXT: Record<Status['state'], string> = {
-  on: 'Protection is on for every group.',
-  partial: 'Protection is on for some groups. The others are switched off above.',
-  off: 'Protection is off. Tick at least one group above to turn it on.',
+  on: 'Protection is on: every group is blocked and Safe Search is on.',
+  partial: 'Protection is partly on. Something is switched off above.',
+  off: 'Protection is off. Tick at least one box above to turn it on.',
   error: 'Lumio Guard could not switch on its rules. Try restarting Chrome.',
 };
 
@@ -78,6 +78,16 @@ el<HTMLInputElement>('friendly').addEventListener('change', async (e) => {
   await refreshStatus();
 });
 
+el<HTMLInputElement>('safesearch').addEventListener('change', async (e) => {
+  const s = await getSettings();
+  s.safeSearch = (e.target as HTMLInputElement).checked;
+  await saveSettings(s);
+  await refreshStatus();
+});
+
+void getSettings().then((s) => {
+  el<HTMLInputElement>('safesearch').checked = s.safeSearch;
+});
 void renderCategories();
 void renderFriendly();
 void refreshStatus();

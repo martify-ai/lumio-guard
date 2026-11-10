@@ -70,7 +70,7 @@ test.describe('plain mode (default install)', () => {
     const page = await context.newPage();
     expect(await navError(page, 'http://casino-example.test/')).toBe(NOT_BLOCKED);
     expect(await navError(page, 'http://adult-example.test/')).toBe(BLOCKED);
-    await expect(settings.locator('#status')).toContainText('some groups');
+    await expect(settings.locator('#status')).toContainText('partly on');
 
     await settings.locator('#cat-gambling').check();
     await waitForRulesets(worker, ['adult-block', 'gambling-block']);
@@ -100,7 +100,7 @@ test.describe('plain mode (default install)', () => {
     const popup = await context.newPage();
     await popup.goto(`chrome-extension://${extensionId}/popup.html`);
     await expect(popup.locator('#headline')).toHaveText('Protection is on');
-    await expect(popup.locator('#categories li')).toHaveCount(2);
+    await expect(popup.locator('#categories li')).toHaveCount(3);
     await expect(popup.locator('#incognito')).toBeVisible(); // not allowed in Incognito by default
     await context.close();
   });

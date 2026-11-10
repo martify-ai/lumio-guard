@@ -10,6 +10,11 @@ import { fileURLToPath } from 'node:url';
 import { parseList, removeCoveredSubdomains } from '../src/lib/domain';
 import { buildRuleset, DEFAULT_DOMAINS_PER_RULE, rulesetId } from '../src/lib/rules';
 import type { Category } from '../src/lib/policy';
+import {
+  buildSafeSearchRules,
+  SAFESEARCH_RULESET_ID,
+  safeSearchHostPermissions,
+} from '../src/lib/safesearch';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -53,9 +58,20 @@ for (const c of categories) {
   };
 }
 
+// Safe Search: on from install, like the plain block rules.
+const googleDomains = parseList(
+  readFileSync(resolve(root, '../packages/safesearch/google-domains.txt'), 'utf8'),
+).domains;
+writeFileSync(
+  join(outDir, 'rules', `${SAFESEARCH_RULESET_ID}.json`),
+  JSON.stringify(buildSafeSearchRules(googleDomains)),
+);
+ruleResources.push({ id: SAFESEARCH_RULESET_ID, enabled: true, path: `rules/${SAFESEARCH_RULESET_ID}.json` });
+report.safeSearch = { googleDomains: googleDomains.length };
+
 const manifest = JSON.parse(readFileSync(join(root, 'static/manifest.json'), 'utf8'));
 manifest.declarative_net_request.rule_resources = ruleResources;
-if (testHostAccess) manifest.host_permissions = ['<all_urls>'];
+manifest.host_permissions = testHostAccess ? ['<all_urls>'] : safeSearchHostPermissions(googleDomains);
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
 
 for (const f of ['popup.html', 'options.html', 'blocked.html', 'ui.css']) {

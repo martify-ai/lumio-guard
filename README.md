@@ -3,8 +3,9 @@
 A digital protection and wellbeing product for young people, by Luminescent.
 **Protect · Understand · Interrupt · Redirect · Grow.**
 
-Current stage: **v0, Milestone 1** — a local-only Chrome extension that blocks known harmful
-sites. It has no account, no server and sends nothing anywhere.
+Current stage: **v0, Milestone 2** — a local-only Chrome extension that blocks known harmful
+sites and keeps Safe Search on (Google, Bing, DuckDuckGo, YouTube Restricted Mode). It has no
+account, no server and sends nothing anywhere.
 
 ## Folders
 
@@ -30,7 +31,9 @@ npm run build
 3. Click **Load unpacked** and choose the `extension/dist` folder.
 4. Visit `http://adult-example.test/` or `http://casino-example.test/`. Chrome shows a
    "blocked" page. `http://safe-example.test/` is not blocked (it just doesn't exist).
-5. Click the Lumio Guard icon for the status pop-up, and **Settings** to switch groups on or off.
+5. Search for anything on Google or Bing: the address gains `safe=active` / `adlt=strict`, and
+   it comes back if you remove it. On YouTube, Restricted Mode is on and cannot be switched off.
+6. Click the Lumio Guard icon for the status pop-up, and **Settings** to switch groups on or off.
 
 Milestone 1 uses **fake `.test` domains only**. Real, licensed blocklists come next.
 
@@ -48,5 +51,6 @@ npm run spike:capacity    # how many domains fit (slow; results in docs/CAPACITY
 
 - Work in other browsers, phone apps or on phones (see `docs/DECISIONS.md` for the phone plan).
 - Catch sites that are not on its lists, or every explicit ad.
+- Keep search safe on engines other than Google, Bing, DuckDuckGo and YouTube.
 - Stop someone from turning it off in Chrome's extension settings.
 - Measure total screen time (later milestones measure browser time only).
