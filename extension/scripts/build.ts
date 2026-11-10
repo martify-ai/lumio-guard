@@ -15,6 +15,7 @@ import {
   SAFESEARCH_RULESET_ID,
   safeSearchHostPermissions,
 } from '../src/lib/safesearch';
+import { ENTERTAINMENT_DOMAINS } from '../src/lib/wellbeing';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -28,6 +29,7 @@ const outDir = resolve(root, opt('--out', 'dist'));
 const listsDir = resolve(root, opt('--lists', '../packages/blocklists/test'));
 const perRule = Number(opt('--per-rule', String(DEFAULT_DOMAINS_PER_RULE)));
 const testHostAccess = args.includes('--test-host-access');
+const testHooks = args.includes('--test-hooks');
 
 const categories: Category[] = JSON.parse(
   readFileSync(resolve(root, '../packages/blocklists/categories.json'), 'utf8'),
@@ -71,19 +73,24 @@ report.safeSearch = { googleDomains: googleDomains.length };
 
 const manifest = JSON.parse(readFileSync(join(root, 'static/manifest.json'), 'utf8'));
 manifest.declarative_net_request.rule_resources = ruleResources;
-manifest.host_permissions = testHostAccess ? ['<all_urls>'] : safeSearchHostPermissions(googleDomains);
+// Site access: Safe Search sites, plus the entertainment sites where the break
+// reminder may appear on the page.
+manifest.host_permissions = testHostAccess
+  ? ['<all_urls>']
+  : [...new Set([...safeSearchHostPermissions(googleDomains), ...ENTERTAINMENT_DOMAINS.map((d) => `*://*.${d}/*`)])];
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
 
-for (const f of ['popup.html', 'options.html', 'blocked.html', 'ui.css']) {
+for (const f of ['popup.html', 'options.html', 'blocked.html', 'break.html', 'ui.css', 'icon16.png', 'icon48.png', 'icon128.png']) {
   cpSync(join(root, 'static', f), join(outDir, f));
 }
 
 await build({
-  entryPoints: ['background', 'popup', 'options', 'blocked'].map((n) => join(root, 'src', `${n}.ts`)),
+  entryPoints: ['background', 'popup', 'options', 'blocked', 'break'].map((n) => join(root, 'src', `${n}.ts`)),
   outdir: outDir,
   bundle: true,
   format: 'esm',
   target: 'chrome120',
+  define: { LG_TEST: String(testHooks) },
   logLevel: 'warning',
 });
 

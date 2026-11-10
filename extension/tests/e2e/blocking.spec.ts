@@ -148,7 +148,7 @@ test('extension pages make no network requests', async () => {
     if (/^https?:/.test(r.url()) && r.frame().url().startsWith('chrome-extension://')) outbound.push(r.url());
   });
   const page = await context.newPage();
-  for (const p of ['popup.html', 'options.html', 'blocked.html?c=adult']) {
+  for (const p of ['popup.html', 'options.html', 'blocked.html?c=adult', 'break.html']) {
     await page.goto(`chrome-extension://${extensionId}/${p}`);
     await page.waitForLoadState('networkidle');
   }

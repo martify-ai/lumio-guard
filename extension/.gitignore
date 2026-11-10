@@ -5,3 +5,4 @@ dist-test/
 test-results/
 playwright-report/
 .browsers/
+dist-hooks/

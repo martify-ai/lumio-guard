@@ -1,6 +1,7 @@
 import { CATEGORIES, getSettings, type Status } from './lib/extension';
 import { COVERED_ENGINES } from './lib/safesearch';
 import type { ProtectionState } from './lib/policy';
+import { todayTotals, wholeMinutes, type WellbeingState } from './lib/wellbeing';
 
 const COPY: Record<ProtectionState, { pill: string; headline: string; detail: string }> = {
   on: { pill: 'On', headline: 'Protection is on', detail: 'Known harmful sites are blocked in this browser.' },
@@ -41,6 +42,12 @@ async function render(): Promise<void> {
   );
 
   el('incognito').hidden = await chrome.extension.isAllowedIncognitoAccess();
+
+  const wb = (await chrome.runtime.sendMessage({ type: 'wellbeing-refresh' })) as WellbeingState;
+  const now = Date.now();
+  el('time').textContent =
+    `Browsing time: ${wholeMinutes(wb.sessionMs)} min this session, ` +
+    `${wholeMinutes(todayTotals(wb, now).activeMs)} min today.`;
 }
 
 el('open-settings').addEventListener('click', () => chrome.runtime.openOptionsPage());

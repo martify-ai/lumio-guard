@@ -4,6 +4,7 @@
 // working even while this worker is asleep.
 
 import { applyPolicy, isSettingsChange } from './lib/extension';
+import { startWellbeing } from './wellbeing-runtime';
 
 chrome.runtime.onInstalled.addListener(() => void applyPolicy());
 chrome.runtime.onStartup.addListener(() => void applyPolicy());
@@ -16,6 +17,8 @@ chrome.storage.onChanged.addListener((changes, area) => {
 // grant or remove at any time from Chrome's own extension settings.
 chrome.permissions.onAdded.addListener(() => void applyPolicy());
 chrome.permissions.onRemoved.addListener(() => void applyPolicy());
+
+startWellbeing();
 
 // Popup and settings page ask for a fresh check when they open.
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {

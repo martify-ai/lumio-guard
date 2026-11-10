@@ -6,6 +6,7 @@ import {
   saveSettings,
   type Status,
 } from './lib/extension';
+import { thresholdsValid } from './lib/wellbeing';
 
 const STATUS_TEXT: Record<Status['state'], string> = {
   on: 'Protection is on: every group is blocked and Safe Search is on.',
@@ -13,6 +14,8 @@ const STATUS_TEXT: Record<Status['state'], string> = {
   off: 'Protection is off. Tick at least one box above to turn it on.',
   error: 'Lumio Guard could not switch on its rules. Try restarting Chrome.',
 };
+
+const TIME_IDS = ['t0', 't1', 't2'];
 
 function el<T extends HTMLElement>(id: string): T {
   return document.getElementById(id) as T;
@@ -87,7 +90,32 @@ el<HTMLInputElement>('safesearch').addEventListener('change', async (e) => {
 
 void getSettings().then((s) => {
   el<HTMLInputElement>('safesearch').checked = s.safeSearch;
+  el<HTMLInputElement>('wellbeing').checked = s.wellbeing.enabled;
+  TIME_IDS.forEach((id, i) => {
+    el<HTMLInputElement>(id).value = String(s.wellbeing.thresholds[i] ?? '');
+  });
 });
+
+el<HTMLInputElement>('wellbeing').addEventListener('change', async (e) => {
+  const s = await getSettings();
+  s.wellbeing.enabled = (e.target as HTMLInputElement).checked;
+  await saveSettings(s);
+});
+
+for (const id of TIME_IDS) {
+  el<HTMLInputElement>(id).addEventListener('change', async () => {
+    const values = TIME_IDS.map((t) => Number(el<HTMLInputElement>(t).value));
+    const note = el('times-note');
+    if (!thresholdsValid(values)) {
+      note.textContent = 'Not saved. Use whole minutes from 1 to 600, each one bigger than the one before.';
+      return;
+    }
+    const s = await getSettings();
+    s.wellbeing.thresholds = values;
+    await saveSettings(s);
+    note.textContent = 'Saved.';
+  });
+}
 void renderCategories();
 void renderFriendly();
 void refreshStatus();

@@ -3,6 +3,7 @@
 
 import { rulesetId, type Mode } from './rules';
 import { SAFESEARCH_RULESET_ID } from './safesearch';
+import { cleanThresholds, DEFAULT_THRESHOLDS } from './wellbeing';
 
 export interface Category {
   id: string;
@@ -18,6 +19,8 @@ export interface Settings {
   friendlyPage: boolean;
   /** force safe modes on supported search engines and YouTube */
   safeSearch: boolean;
+  /** break reminders: on/off and the minutes at which they appear */
+  wellbeing: { enabled: boolean; thresholds: number[] };
 }
 
 export function defaultSettings(categories: Category[]): Settings {
@@ -25,6 +28,7 @@ export function defaultSettings(categories: Category[]): Settings {
     categories: Object.fromEntries(categories.map((c) => [c.id, c.defaultOn])),
     friendlyPage: false,
     safeSearch: true,
+    wellbeing: { enabled: true, thresholds: [...DEFAULT_THRESHOLDS] },
   };
 }
 
@@ -39,6 +43,10 @@ export function mergeSettings(categories: Category[], saved: unknown): Settings 
   }
   if (typeof s.friendlyPage === 'boolean') base.friendlyPage = s.friendlyPage;
   if (typeof s.safeSearch === 'boolean') base.safeSearch = s.safeSearch;
+  if (s.wellbeing && typeof s.wellbeing === 'object') {
+    if (typeof s.wellbeing.enabled === 'boolean') base.wellbeing.enabled = s.wellbeing.enabled;
+    base.wellbeing.thresholds = cleanThresholds(s.wellbeing.thresholds);
+  }
   return base;
 }
 

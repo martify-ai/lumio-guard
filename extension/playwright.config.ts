@@ -7,7 +7,7 @@ process.env.PLAYWRIGHT_BROWSERS_PATH ??= resolve(import.meta.dirname, '.browsers
 
 export default defineConfig({
   testDir: 'tests/e2e',
-  timeout: 60_000,
+  timeout: 150_000, // generous: this PC can be slow while OneDrive syncs
   workers: 1,
   reporter: 'list',
 });

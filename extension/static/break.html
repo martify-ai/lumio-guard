@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Take a break</title>
+  <link rel="stylesheet" href="ui.css">
+  <style>
+    main { max-width: 560px; margin: 0 auto; padding: 48px 16px; }
+    #ideas { list-style: none; padding: 0; margin: 20px 0; display: grid; gap: 12px; }
+    .idea h2 { margin: 8px 0 4px; }
+    .idea p { margin: 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">Lumio Guard</p>
+    <h1>Good call. Take a few minutes.</h1>
+    <p>Here are three small things you could do right now. Pick one, or just step away from the screen.</p>
+    <ul id="ideas"></ul>
+    <button id="more" class="btn outline">Show me something else</button>
+    <p class="muted" style="margin-top:20px">You can close this tab whenever you're ready.</p>
+  </main>
+  <script src="break.js" type="module"></script>
+</body>
+</html>

@@ -19,6 +19,7 @@ describe('settings', () => {
       categories: { adult: true, gambling: true },
       friendlyPage: false,
       safeSearch: true,
+      wellbeing: { enabled: true, thresholds: [15, 30, 60] },
     });
   });
   it('keeps saved values and fills new settings with defaults', () => {
@@ -26,8 +27,14 @@ describe('settings', () => {
       categories: { adult: false, gambling: true },
       friendlyPage: true,
       safeSearch: true,
+      wellbeing: { enabled: true, thresholds: [15, 30, 60] },
     });
     expect(mergeSettings(cats, { safeSearch: false }).safeSearch).toBe(false);
+    expect(mergeSettings(cats, { wellbeing: { enabled: false, thresholds: [10, 20] } }).wellbeing).toEqual({
+      enabled: false,
+      thresholds: [10, 20],
+    });
+    expect(mergeSettings(cats, { wellbeing: { thresholds: [30, 10] } }).wellbeing.thresholds).toEqual([15, 30, 60]);
   });
   it('ignores junk and unknown categories', () => {
     expect(
@@ -48,14 +55,14 @@ describe('activeMode', () => {
 
 describe('computeRulesetChanges', () => {
   it('enables plain rules for on categories and disables the rest', () => {
-    const s = { categories: { adult: true, gambling: false }, friendlyPage: false, safeSearch: true };
+    const s = { ...defaultSettings(cats), categories: { adult: true, gambling: false } };
     expect(computeRulesetChanges(cats, s, false)).toEqual({
       enableRulesetIds: ['adult-block', 'safesearch'],
       disableRulesetIds: ['adult-page', 'gambling-block', 'gambling-page'],
     });
   });
   it('swaps to friendly rules when allowed', () => {
-    const s = { categories: { adult: true, gambling: true }, friendlyPage: true, safeSearch: true };
+    const s = { ...defaultSettings(cats), friendlyPage: true };
     expect(computeRulesetChanges(cats, s, true)).toEqual({
       enableRulesetIds: ['adult-page', 'gambling-page', 'safesearch'],
       disableRulesetIds: ['adult-block', 'gambling-block'],
@@ -99,7 +106,7 @@ describe('protectionState', () => {
   });
   it('is off only when everything is off', () => {
     expect(
-      protectionState(cats, { categories: { adult: false, gambling: false }, friendlyPage: false, safeSearch: false }, [], false),
+      protectionState(cats, { ...all, categories: { adult: false, gambling: false }, safeSearch: false }, [], false),
     ).toBe('off');
   });
 });

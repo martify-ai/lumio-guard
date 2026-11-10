@@ -6,10 +6,11 @@
   "description": "Lumio Guard v0 — local-first Chrome (Manifest V3) extension",
   "scripts": {
     "build": "tsx scripts/build.ts",
-    "build:test": "tsx scripts/build.ts --test-host-access --out dist-test",
+    "build:test": "tsx scripts/build.ts --test-host-access --test-hooks --out dist-test",
+    "build:hooks": "tsx scripts/build.ts --test-hooks --out dist-hooks",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "npm run build && npm run build:test && playwright test",
+    "test:e2e": "npm run build && npm run build:test && npm run build:hooks && playwright test",
     "spike:capacity": "tsx scripts/spike-capacity.ts",
     "browsers:install": "node scripts/install-browser.mjs"
   },

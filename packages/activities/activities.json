@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "note": "Break ideas shown on the take-a-break page. Shared by every Lumio Guard client. No links, no feeds. Faith-oriented ideas are kept in a separate file and only shown when faith mode is on (not built yet).",
+  "activities": [
+    { "id": "move-stretch", "group": "Move", "title": "Stand up and stretch", "detail": "Reach for the ceiling, roll your shoulders, and loosen your neck for one minute." },
+    { "id": "move-walk", "group": "Move", "title": "Take a short walk", "detail": "Walk around the house or compound for five minutes, without your phone." },
+    { "id": "move-water", "group": "Move", "title": "Get a glass of water", "detail": "Drink it slowly somewhere away from the screen." },
+    { "id": "create-draw", "group": "Create", "title": "Draw something near you", "detail": "Pick any object in the room and sketch it for five minutes. It doesn't need to be good." },
+    { "id": "create-write", "group": "Create", "title": "Write five lines", "detail": "A short story, a song verse, or just what is on your mind today." },
+    { "id": "connect-talk", "group": "Connect", "title": "Talk to someone at home", "detail": "Ask them how their day is going, and really listen." },
+    { "id": "connect-help", "group": "Connect", "title": "Help with one small thing", "detail": "Wash a plate, fold some clothes, or carry something for someone." },
+    { "id": "rest-eyes", "group": "Rest", "title": "Rest your eyes", "detail": "Look out of a window at something far away for a full minute." },
+    { "id": "rest-breathe", "group": "Rest", "title": "Breathe slowly", "detail": "Breathe in for four counts and out for four counts, ten times." },
+    { "id": "learn-read", "group": "Learn", "title": "Read two pages", "detail": "Pick up a book or your notes and read just two pages." },
+    { "id": "learn-question", "group": "Learn", "title": "Chase one question", "detail": "Think of something you have always wondered about and write the question down to look up later." },
+    { "id": "reflect-plan", "group": "Reflect", "title": "Ask yourself one thing", "detail": "What did I come online to do, and have I done it?" }
+  ]
+}

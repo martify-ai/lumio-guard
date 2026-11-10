@@ -43,6 +43,20 @@ habit growth are equally part of the product.
 | Site access | Asked at install, only for the search/YouTube sites | The Build Plan wants Safe Search on by default. The cost is an install warning listing those sites. |
 | Uncovered search engines | Left reachable | Blocking every other search engine would over-block. Revisit as an optional "only allow safe search engines" setting. |
 
+## Break reminders (Milestones 4–6) — choices made, open to change
+
+| Topic | Choice | Why |
+|---|---|---|
+| What is counted | All active time in this browser, not time per site | Needs no access to browsing addresses. Cost: schoolwork counts the same as entertainment. Sorting time by type of site would need address access; revisit with real users. |
+| "Active" means | A Chrome window is in front AND (keyboard/mouse used in the last 60 seconds OR the front tab is playing sound) | Counts watching videos; does not count music playing behind another program, a locked screen, or time away. |
+| Session ends | After 5 minutes without activity (Build Plan) | |
+| Reminders | 15 / 30 / 60 minutes, changeable in Settings (1–600, rising). Each shows once per session. | Hypotheses to test with real young people. |
+| Where the reminder shows | A small card on the page on YouTube, TikTok, Instagram, Facebook, X/Twitter; a normal notification everywhere else | Avoids asking for access to every website. |
+| At 60 minutes | Firmer wording, still no lockout | Build Plan. Doc 11's guardian-controlled restriction is left for v1. |
+| What is stored | Per day, for 7 days: minutes active, reminders shown, breaks taken. Numbers only. | "Understand" pillar without browsing history. |
+| Break ideas | 12 ideas in `packages/activities`, three shown at a time. No faith ideas yet. | Faith mode is optional and comes later, in its own file. |
+| Known gaps | Windows may hide notifications (Focus Assist / Do Not Disturb). Reminders do not show in Incognito unless allowed. The timer can be up to a minute late. | |
+
 ## Conflicts found in the Notion workspace (2026-11-08)
 
 1. **MVP scope.** PRD §8 and doc 06 put guardian accounts, sync and dashboard in the MVP.

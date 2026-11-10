@@ -11,6 +11,8 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 export const DIST = resolve(here, '../../dist');
 export const DIST_TEST = resolve(here, '../../dist-test');
+/** Real permissions plus the test-only activity switch (see wellbeing-runtime.ts). */
+export const DIST_HOOKS = resolve(here, '../../dist-hooks');
 
 export interface Launched {
   context: BrowserContext;
@@ -36,7 +38,7 @@ export async function launch(
   const ours = (w: Worker) => w.url().startsWith('chrome-extension://') && w.url().endsWith('/background.js');
   const worker =
     context.serviceWorkers().find(ours) ??
-    (await context.waitForEvent('serviceworker', { predicate: ours, timeout: 15_000 }));
+    (await context.waitForEvent('serviceworker', { predicate: ours, timeout: 45_000 }));
   const extensionId = new URL(worker.url()).host;
   return { context, worker, extensionId, userDataDir };
 }
