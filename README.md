@@ -14,7 +14,8 @@ no account, no server and sends nothing anywhere.
 |---|---|
 | `extension/` | The Chrome (Manifest V3) extension |
 | `packages/blocklists/` | Category list and blocklists, shared with future clients (Android app) |
-| `docs/` | Handoff brief, decisions, permissions, capacity results |
+| `packages/safesearch/`, `packages/activities/` | Google search domains; break ideas |
+| `docs/` | Handoff brief, decisions, permissions, capacity results, hand-test checklist |
 
 Start with `CLAUDE.md`, then `docs/LUMIO_GUARD_Claude_Code_Engineering_Handoff.md`, then
 `docs/DECISIONS.md`.

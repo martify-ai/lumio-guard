@@ -51,3 +51,13 @@ and recommended next milestone.
 
 Stop at the approved milestone. Do not continue into later phases
 without approval.
+
+## Where things stand (updated 2026-11-11)
+
+-   v0 is built: blocking with real lists, Safe Search, browsing timer,
+    break reminders, break ideas. Not yet tested by a person in branded
+    Chrome: see `docs/V0_CHECKLIST.md`.
+-   Read `docs/DECISIONS.md` for every choice made so far and what is
+    still open. Read `docs/PERMISSIONS.md` before touching permissions.
+-   Commands and code layout: `extension/README.md`.
+-   Explain things to the product owner in short, plain steps.

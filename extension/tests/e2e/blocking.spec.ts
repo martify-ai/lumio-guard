@@ -100,7 +100,8 @@ test.describe('plain mode (default install)', () => {
     const popup = await context.newPage();
     await popup.goto(`chrome-extension://${extensionId}/popup.html`);
     await expect(popup.locator('#headline')).toHaveText('Protection is on');
-    await expect(popup.locator('#categories li')).toHaveCount(3);
+    await expect(popup.locator('#categories li')).toHaveCount(4);
+    await expect(popup.locator('#reminders-row')).toContainText('On');
     await expect(popup.locator('#incognito')).toBeVisible(); // not allowed in Incognito by default
     await context.close();
   });

@@ -39,6 +39,7 @@ async function render(): Promise<void> {
   el<HTMLUListElement>('categories').replaceChildren(
     ...CATEGORIES.map((c) => row(c.label, settings.categories[c.id], 'Blocked', 'Not blocked')),
     row(`Safe Search (${COVERED_ENGINES.join(', ')})`, settings.safeSearch, 'On', 'Off', 'safesearch-row'),
+    row('Break reminders', settings.wellbeing.enabled, 'On', 'Off', 'reminders-row'),
   );
 
   el('incognito').hidden = await chrome.extension.isAllowedIncognitoAccess();

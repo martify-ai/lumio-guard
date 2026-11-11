@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Lumio Guard",
   "version": "0.1.0",
-  "description": "Helps young people stay safe online by blocking known harmful sites. Works on this computer only; sends nothing anywhere.",
+  "description": "Helps young people stay safe online: blocks known harmful sites, keeps Safe Search on, and gives gentle break reminders. Sends nothing anywhere.",
   "minimum_chrome_version": "120",
   "permissions": ["declarativeNetRequest", "storage", "alarms", "idle", "notifications", "scripting"],
   "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },

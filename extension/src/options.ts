@@ -12,7 +12,7 @@ const STATUS_TEXT: Record<Status['state'], string> = {
   on: 'Protection is on: every group is blocked and Safe Search is on.',
   partial: 'Protection is partly on. Something is switched off above.',
   off: 'Protection is off. Tick at least one box above to turn it on.',
-  error: 'Lumio Guard could not switch on its rules. Try restarting Chrome.',
+  error: 'Lumio Guard could not switch on its rules, so protection may not be working. Close Chrome completely and open it again. If you still see this, remove Lumio Guard and install it again.',
 };
 
 const TIME_IDS = ['t0', 't1', 't2'];
@@ -24,6 +24,9 @@ function el<T extends HTMLElement>(id: string): T {
 async function refreshStatus(): Promise<void> {
   const status = (await chrome.runtime.sendMessage({ type: 'refresh-status' })) as Status;
   el('status').textContent = STATUS_TEXT[status.state];
+  // Shown only when something went wrong, to help whoever is fixing it.
+  el('status-detail').textContent =
+    status.state === 'error' && status.error ? `Technical detail: ${status.error}` : '';
 }
 
 async function renderCategories(): Promise<void> {

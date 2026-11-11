@@ -35,11 +35,11 @@ in branded Google Chrome.
 ## What this means
 
 - The rule limit is not a problem. `DEFAULT_DOMAINS_PER_RULE = 1000` stays.
-- **Download size is the real cost.** 1,000,000 domains made a 139 MB extension, because each
-  category ships two rulesets (plain mode and friendly-page mode), so every domain is stored
-  about three times. Before using lists this large:
-  1. Store the friendly-mode rules more cheaply (for example one ruleset plus a small
-     higher-priority redirect layer), and
+- **Download size is the real cost.** In the spike, 1,000,000 domains made a 139 MB extension
+  because every domain was stored about three times. The rule layout has since been changed
+  to store each domain twice (see "Real lists" above: 1.29 million domains in 51 MB). To go
+  further:
+  1. (Done) Layer the friendly-mode redirect over the always-on block rules, and
   2. Remove dead domains and subdomains already covered by a parent, and
   3. Measure page-load speed and memory with the real list.
 - Not yet tested: branded Google Chrome (it refuses test-loaded extensions; needs a manual
