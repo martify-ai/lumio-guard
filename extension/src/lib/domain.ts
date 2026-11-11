@@ -93,3 +93,35 @@ export function removeCoveredSubdomains(domains: string[]): string[] {
 export function isSameOrSubdomain(host: string, domain: string): boolean {
   return host === domain || host.endsWith(`.${domain}`);
 }
+
+export interface NeverBlockResult {
+  kept: string[];
+  /** list entries removed because they would block a protected site */
+  removed: string[];
+}
+
+/**
+ * Remove every list entry that would block a never-block site: the site itself, or
+ * a parent of it (blocking a parent blocks all its subdomains). A more specific
+ * entry under a protected site (e.g. one bad subdomain of a hosting site) is kept.
+ */
+export function applyNeverBlock(domains: string[], neverBlock: string[]): NeverBlockResult {
+  const banned = new Set<string>();
+  for (const safe of neverBlock) {
+    const parts = safe.split('.');
+    for (let i = 0; i < parts.length - 1; i++) banned.add(parts.slice(i).join('.'));
+  }
+  const kept: string[] = [];
+  const removed: string[] = [];
+  for (const d of domains) (banned.has(d) ? removed : kept).push(d);
+  return { kept, removed };
+}
+
+/** True when `host` would be blocked by a list containing `domains` (as a Set). */
+export function isBlockedBy(host: string, domains: Set<string>): boolean {
+  const parts = host.split('.');
+  for (let i = 0; i < parts.length - 1; i++) {
+    if (domains.has(parts.slice(i).join('.'))) return true;
+  }
+  return false;
+}

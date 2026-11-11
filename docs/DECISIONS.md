@@ -43,6 +43,18 @@ habit growth are equally part of the product.
 | Site access | Asked at install, only for the search/YouTube sites | The Build Plan wants Safe Search on by default. The cost is an install warning listing those sites. |
 | Uncovered search engines | Left reachable | Blocking every other search engine would over-block. Revisit as an optional "only allow safe search engines" setting. |
 
+## Real blocklists — choices made, open to change
+
+| Topic | Choice | Why |
+|---|---|---|
+| Sources | Block List Project (Unlicense) + Sinfonietta (MIT) + our own Nigerian betting list | Licences clearly allow use in a product that is sold. Details in `packages/blocklists/SOURCES.md`. |
+| Size | Full lists: 1.29 million domains, 51 MB | Coverage matters more than download size for protection. A `compact` profile exists (`npm run lists -- --profile compact`). |
+| Trimming by popularity | Not done | The popularity lists we found carry non-commercial terms. |
+| HaGeZi (GPL-3.0) | Not used yet | Needs a product-owner decision. It is the best replacement for the Block List Project, which was archived in October 2026 and will go stale. |
+| Never-block list | 61 school, health, faith, news and government sites can never be blocked | Over-blocking is a serious defect (handoff §11). |
+| Real lists in git | Not committed; rebuilt from pinned, checksummed sources | Keeps a catalogue of adult sites out of the repository and makes provenance exact. |
+| Updates | None yet: the lists are a snapshot | Updatable rule packages arrive with v1. |
+
 ## Break reminders (Milestones 4–6) — choices made, open to change
 
 | Topic | Choice | Why |

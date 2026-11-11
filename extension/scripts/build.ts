@@ -26,7 +26,10 @@ const opt = (name: string, fallback: string) => {
 };
 
 const outDir = resolve(root, opt('--out', 'dist'));
-const listsDir = resolve(root, opt('--lists', '../packages/blocklists/test'));
+// Default: the real lists if `npm run lists` has built them, otherwise the fake test lists.
+const realLists = resolve(root, '../packages/blocklists/real');
+const usingReal = !args.includes('--lists') && existsSync(join(realLists, 'adult.txt'));
+const listsDir = usingReal ? realLists : resolve(root, opt('--lists', '../packages/blocklists/test'));
 const perRule = Number(opt('--per-rule', String(DEFAULT_DOMAINS_PER_RULE)));
 const testHostAccess = args.includes('--test-host-access');
 const testHooks = args.includes('--test-hooks');
@@ -39,7 +42,7 @@ rmSync(outDir, { recursive: true, force: true });
 mkdirSync(join(outDir, 'rules'), { recursive: true });
 
 const ruleResources: { id: string; enabled: boolean; path: string }[] = [];
-const report: Record<string, unknown> = { listsDir, perRule, categories: {} };
+const report: Record<string, unknown> = { listsDir, realLists: usingReal, perRule, categories: {} };
 
 for (const c of categories) {
   const file = join(listsDir, `${c.id}.txt`);
@@ -96,4 +99,5 @@ await build({
 
 writeFileSync(join(outDir, 'build-report.json'), JSON.stringify(report, null, 2));
 console.log(`Built ${outDir}`);
+console.log(usingReal ? 'Lists: REAL blocklists' : `Lists: ${listsDir} (run "npm run lists" first for real blocklists)`);
 console.log(JSON.stringify(report.categories, null, 2));

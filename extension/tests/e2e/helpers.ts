@@ -9,7 +9,10 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-export const DIST = resolve(here, '../../dist');
+/** Built from the fake test lists (npm run build:e2e). */
+export const DIST = resolve(here, '../../dist-e2e');
+/** The build you load into Chrome; has the real lists once `npm run lists` has run. */
+export const DIST_REAL = resolve(here, '../../dist');
 export const DIST_TEST = resolve(here, '../../dist-test');
 /** Real permissions plus the test-only activity switch (see wellbeing-runtime.ts). */
 export const DIST_HOOKS = resolve(here, '../../dist-hooks');

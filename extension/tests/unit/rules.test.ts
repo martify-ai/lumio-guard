@@ -24,18 +24,15 @@ describe('buildRuleset — plain mode', () => {
 
 describe('buildRuleset — friendly mode', () => {
   const rules = buildRuleset('gambling', domains, 'page', 5);
-  it('sends the page to the block page and blocks everything else', () => {
-    expect(rules).toHaveLength(2);
-    const [redirect, block] = rules;
+  it('adds only a higher-priority rule that sends the page to the block page', () => {
+    expect(rules).toHaveLength(1);
+    const [redirect] = rules;
+    expect(redirect.priority).toBe(2);
+    expect(buildRuleset('gambling', domains, 'block', 5)[0].priority).toBe(1);
     expect(redirect.action.type).toBe('redirect');
     expect(redirect.action.redirect?.extensionPath).toBe('/blocked.html?c=gambling');
     expect(redirect.condition.resourceTypes).toEqual(['main_frame']);
-    expect(block.action.type).toBe('block');
-    expect(block.condition.resourceTypes).not.toContain('main_frame');
-    expect(block.condition.resourceTypes).toHaveLength(ALL_RESOURCE_TYPES.length - 1);
-  });
-  it('covers the same domains in both rules', () => {
-    expect(rules[0].condition.requestDomains).toEqual(rules[1].condition.requestDomains);
+    expect(redirect.condition.requestDomains).toEqual(domains);
   });
 });
 

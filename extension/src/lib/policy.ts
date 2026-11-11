@@ -70,9 +70,8 @@ export function computeRulesetChanges(
   const disable: string[] = [];
   for (const c of categories) {
     const on = settings.categories[c.id] === true;
-    for (const m of ['block', 'page'] as Mode[]) {
-      (on && m === mode ? enable : disable).push(rulesetId(c.id, m));
-    }
+    (on ? enable : disable).push(rulesetId(c.id, 'block'));
+    (on && mode === 'page' ? enable : disable).push(rulesetId(c.id, 'page'));
   }
   (settings.safeSearch ? enable : disable).push(SAFESEARCH_RULESET_ID);
   return { enableRulesetIds: enable, disableRulesetIds: disable };

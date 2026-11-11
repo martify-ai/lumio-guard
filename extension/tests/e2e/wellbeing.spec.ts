@@ -11,14 +11,23 @@ const MIN = 60_000;
 /** Put the timer just short of `minutes` of active use, then tick it past. */
 async function reach(worker: Worker, minutes: number): Promise<void> {
   await worker.evaluate(async ([m, MINUTE]) => {
-    const now = Date.now();
-    const saved = (await chrome.storage.local.get('wellbeing')).wellbeing ?? { fired: [], days: {} };
-    await chrome.storage.local.set({
-      wellbeing: { ...saved, sessionMs: m * MINUTE - 5_000, lastTickAt: now - 30_000, lastActiveAt: now - 30_000, wasActive: true },
-    });
     const t = (globalThis as any).__lgTest;
     t.setActive(true);
-    await t.tick();
+    // The extension's own once-a-minute tick can land between our write and our tick
+    // and overwrite the state we set. Retry until the timer has really passed `m`.
+    for (let attempt = 0; attempt < 5; attempt++) {
+      await t.tick(); // let any tick already in flight finish first
+      const now = Date.now();
+      const saved = (await chrome.storage.local.get('wellbeing')).wellbeing ?? { fired: [], days: {} };
+      if (saved.sessionMs >= m * MINUTE) return;
+      await chrome.storage.local.set({
+        wellbeing: { ...saved, sessionMs: m * MINUTE - 5_000, lastTickAt: now - 30_000, lastActiveAt: now - 30_000, wasActive: true },
+      });
+      await t.tick();
+      const after = (await chrome.storage.local.get('wellbeing')).wellbeing;
+      if (after?.sessionMs >= m * MINUTE) return;
+    }
+    throw new Error(`Timer did not reach ${m} minutes`);
   }, [minutes, MIN]);
 }
 

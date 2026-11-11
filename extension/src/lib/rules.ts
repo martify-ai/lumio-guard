@@ -1,10 +1,12 @@
 // Builds Chrome declarativeNetRequest static rulesets from a category's domains.
 //
-// Two rulesets per category, only one enabled at a time:
-//   "<cat>-block" — plain mode: block every request, including the page itself.
-//                   Chrome shows its own "blocked" page. Needs no host access.
-//   "<cat>-page"  — friendly mode: send the page itself to our blocked.html and
-//                   block all other requests. Needs "all sites" host access.
+// Two rulesets per category:
+//   "<cat>-block" — always on with the category: block every request, including the
+//                   page itself. Chrome shows its own "blocked" page. No host access.
+//   "<cat>-page"  — added on top in friendly mode: a higher-priority rule that sends
+//                   the page itself to our blocked.html. Needs "all sites" access.
+// Everything else stays blocked by "<cat>-block", so each domain is stored twice,
+// not three times (see docs/CAPACITY.md).
 
 type Rule = chrome.declarativeNetRequest.Rule;
 // Written out by hand: @types/chrome lags behind Chrome and lacks webtransport/webbundle.
@@ -18,7 +20,6 @@ export const ALL_RESOURCE_TYPES: ResourceType[] = [
   'xmlhttprequest', 'ping', 'csp_report', 'media', 'websocket', 'webtransport',
   'webbundle', 'other',
 ];
-const SUB_RESOURCE_TYPES = ALL_RESOURCE_TYPES.filter((t) => t !== 'main_frame');
 
 /** Domains packed into one rule. Set from the capacity spike; see docs/CAPACITY.md. */
 export const DEFAULT_DOMAINS_PER_RULE = 1000;
@@ -64,7 +65,7 @@ export function buildRuleset(
     } else {
       rules.push({
         id: id++,
-        priority: 1,
+        priority: 2, // wins over the block rule for the page itself
         action: {
           type: 'redirect' as chrome.declarativeNetRequest.RuleActionType,
           redirect: { extensionPath: blockedPagePath(category) },
@@ -72,15 +73,6 @@ export function buildRuleset(
         condition: {
           requestDomains: group,
           resourceTypes: ['main_frame'] as chrome.declarativeNetRequest.ResourceType[],
-        },
-      });
-      rules.push({
-        id: id++,
-        priority: 1,
-        action: { type: 'block' as chrome.declarativeNetRequest.RuleActionType },
-        condition: {
-          requestDomains: group,
-          resourceTypes: SUB_RESOURCE_TYPES as chrome.declarativeNetRequest.ResourceType[],
         },
       });
     }

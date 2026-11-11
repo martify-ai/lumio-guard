@@ -24,8 +24,11 @@ Start with `CLAUDE.md`, then `docs/LUMIO_GUARD_Claude_Code_Engineering_Handoff.m
 ```bash
 cd extension
 npm install
+npm run lists    # downloads and builds the real blocklists (first time: about 35 MB)
 npm run build
 ```
+
+Without `npm run lists`, the build uses fake `.test` sites only.
 
 1. Open `chrome://extensions` in Chrome.
 2. Turn on **Developer mode** (top right).
@@ -39,7 +42,8 @@ npm run build
    it is a normal notification.
 7. Click the Lumio Guard icon for the status pop-up, and **Settings** to switch groups on or off.
 
-Milestone 1 uses **fake `.test` domains only**. Real, licensed blocklists come next.
+With the real lists built, well-known adult and betting sites show Chrome's "blocked" page.
+Where the lists come from and their licences: `packages/blocklists/SOURCES.md`.
 
 ## Tests
 
@@ -55,6 +59,7 @@ npm run spike:capacity    # how many domains fit (slow; results in docs/CAPACITY
 
 - Work in other browsers, phone apps or on phones (see `docs/DECISIONS.md` for the phone plan).
 - Catch sites that are not on its lists, or every explicit ad.
+- Update its lists by itself. They are a snapshot from November 2026.
 - Keep search safe on engines other than Google, Bing, DuckDuckGo and YouTube.
 - Stop someone from turning it off in Chrome's extension settings.
 - Measure total screen time. It counts active time in this browser only.

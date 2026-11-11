@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+  applyNeverBlock,
+  isBlockedBy,
   domainFromLine,
   isSameOrSubdomain,
   normalizeDomain,
@@ -87,5 +89,25 @@ describe('isSameOrSubdomain', () => {
   it('does not match lookalikes', () => {
     expect(isSameOrSubdomain('notexample.com', 'example.com')).toBe(false);
     expect(isSameOrSubdomain('example.com.evil.net', 'example.com')).toBe(false);
+  });
+});
+
+describe('applyNeverBlock', () => {
+  const never = ['wikipedia.org', 'bbc.co.uk', 'jamb.gov.ng'];
+  it('removes a protected site and any parent of it, and reports them', () => {
+    const r = applyNeverBlock(['bad.com', 'wikipedia.org', 'co.uk', 'gov.ng', 'other.net'], never);
+    expect(r.kept).toEqual(['bad.com', 'other.net']);
+    expect(r.removed).toEqual(['wikipedia.org', 'co.uk', 'gov.ng']);
+  });
+  it('keeps a specific subdomain under a protected site, and lookalikes', () => {
+    const r = applyNeverBlock(['ads.wikipedia.org', 'notwikipedia.org', 'wikipedia.org.evil.com'], never);
+    expect(r.removed).toEqual([]);
+  });
+  it('after filtering, no protected site is blocked', () => {
+    const { kept } = applyNeverBlock(['wikipedia.org', 'co.uk', 'bad.com'], never);
+    const set = new Set(kept);
+    for (const d of never) expect(isBlockedBy(d, set)).toBe(false);
+    expect(isBlockedBy('www.bad.com', set)).toBe(true);
+    expect(isBlockedBy('notbad.com', set)).toBe(false);
   });
 });

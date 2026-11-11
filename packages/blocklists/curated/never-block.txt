@@ -1,0 +1,77 @@
+# Sites Lumio Guard must never block, whatever an upstream list says.
+# If a list contains one of these (or a parent of one), the entry is removed at
+# build time and reported. Blocking health, school, faith or news sites by mistake
+# is a serious defect (handoff section 11). Add to this list freely.
+
+# Search, reference, common tools
+google.com
+bing.com
+duckduckgo.com
+wikipedia.org
+wikimedia.org
+youtube.com
+github.com
+microsoft.com
+apple.com
+whatsapp.com
+zoom.us
+archive.org
+
+# Learning
+khanacademy.org
+coursera.org
+edx.org
+duolingo.com
+britannica.com
+bbc.co.uk
+scratch.mit.edu
+w3schools.com
+freecodecamp.org
+jamb.gov.ng
+waecdirect.org
+waecnigeria.org
+neco.gov.ng
+nuc.edu.ng
+myschool.ng
+
+# Health and support (including sexual-health education)
+who.int
+nhs.uk
+cdc.gov
+mayoclinic.org
+webmd.com
+healthline.com
+kidshealth.org
+plannedparenthood.org
+unicef.org
+childline.org.uk
+ncdc.gov.ng
+nafdac.gov.ng
+
+# Faith
+bible.com
+biblegateway.com
+youversion.com
+biblehub.com
+desiringgod.org
+gotquestions.org
+openbible.info
+
+# News
+bbc.com
+punchng.com
+vanguardngr.com
+premiumtimesng.com
+guardian.ng
+channelstv.com
+thecable.ng
+aljazeera.com
+reuters.com
+
+# Government and money
+nigeria.gov.ng
+cbn.gov.ng
+nimc.gov.ng
+firs.gov.ng
+paystack.com
+flutterwave.com

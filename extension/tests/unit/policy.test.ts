@@ -64,8 +64,8 @@ describe('computeRulesetChanges', () => {
   it('swaps to friendly rules when allowed', () => {
     const s = { ...defaultSettings(cats), friendlyPage: true };
     expect(computeRulesetChanges(cats, s, true)).toEqual({
-      enableRulesetIds: ['adult-page', 'gambling-page', 'safesearch'],
-      disableRulesetIds: ['adult-block', 'gambling-block'],
+      enableRulesetIds: ['adult-block', 'adult-page', 'gambling-block', 'gambling-page', 'safesearch'],
+      disableRulesetIds: [],
     });
   });
   it('turns Safe Search off on its own, leaving blocking on', () => {
@@ -75,11 +75,12 @@ describe('computeRulesetChanges', () => {
       disableRulesetIds: ['adult-page', 'gambling-page', 'safesearch'],
     });
   });
-  it('never enables both modes for one category', () => {
+  it('always keeps the block rules on, whatever the block-page mode', () => {
     for (const host of [true, false]) {
       for (const friendlyPage of [true, false]) {
         const { enableRulesetIds } = computeRulesetChanges(cats, { ...defaultSettings(cats), friendlyPage }, host);
-        expect(enableRulesetIds.filter((id) => id !== 'safesearch')).toHaveLength(2);
+        expect(enableRulesetIds).toEqual(expect.arrayContaining(['adult-block', 'gambling-block']));
+        expect(enableRulesetIds.includes('adult-page')).toBe(host && friendlyPage);
       }
     }
   });

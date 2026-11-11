@@ -20,6 +20,18 @@ synthetic `.test` domains, one category).
 Start-up times include launching the browser, so treat them as upper bounds, not rule-loading
 time alone. Page-load speed with large lists was not measured.
 
+## Real lists (2026-11-10)
+
+With the real lists (948,756 adult + 342,813 betting domains = 1.29 million) the extension
+folder is **51 MB**, in 1,292 block rules plus 1,292 friendly-page rules.
+
+This is after changing the rule layout so each domain is stored twice instead of three
+times: the block ruleset is always on, and friendly mode adds a higher-priority rule for the
+page itself on top, instead of swapping to a second full copy.
+
+Still not measured: page-load speed and memory with the real lists, and first-install time
+in branded Google Chrome.
+
 ## What this means
 
 - The rule limit is not a problem. `DEFAULT_DOMAINS_PER_RULE = 1000` stays.

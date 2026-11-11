@@ -1,0 +1,73 @@
+# Betting and gambling sites popular in Nigeria, plus major international brands.
+# Hand-picked for Lumio Guard on 2026-11-10 from public knowledge. The free upstream
+# lists miss many Nigerian sites, so these are added on top.
+# STATUS: needs a human review before public launch. `npm run lists` reports which
+# of these are also confirmed by an upstream list.
+# One domain per line. Subdomains are covered automatically.
+
+# Nigeria-focused
+bet9ja.com
+sportybet.com
+betking.com
+nairabet.com
+merrybet.com
+msport.com
+bangbet.com
+accessbet.com
+betbonanza.com
+football.com
+ilotbet.com
+surebet247.com
+lionsbet.com
+zebet.ng
+frapapa.com
+wazobet.com
+betbiga.com
+naijabet.com
+supabets.com.ng
+betland.com.ng
+hallabet.com
+babaijebu.ng
+lottomania.ng
+betpawa.ng
+betpawa.com
+livescorebet.com
+1xbet.ng
+22bet.ng
+betway.com.ng
+betano.ng
+paripesa.ng
+betwinner.ng
+melbet.ng
+parimatch.ng
+mozzartbet.ng
+1win.ng
+
+# International
+1xbet.com
+22bet.com
+betway.com
+betano.com
+paripesa.com
+betwinner.com
+melbet.com
+bet365.com
+betfair.com
+stake.com
+sportingbet.com
+williamhill.com
+888sport.com
+888casino.com
+bwin.com
+unibet.com
+pokerstars.com
+cloudbet.com
+bc.game
+roobet.com
+10bet.com
+betfred.com
+ladbrokes.com
+paddypower.com
+skybet.com
+draftkings.com
+fanduel.com

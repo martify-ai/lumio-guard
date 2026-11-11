@@ -124,7 +124,7 @@ test.describe('friendly mode (all-sites access granted, test build)', () => {
     await worker.evaluate(() =>
       chrome.storage.local.set({ settings: { categories: { adult: true, gambling: true }, friendlyPage: true } }),
     );
-    await waitForRulesets(worker, ['adult-page', 'gambling-page']);
+    await waitForRulesets(worker, ['adult-block', 'gambling-block', 'adult-page', 'gambling-page']);
     const page = await context.newPage();
     await page.goto('http://sub.adult-example.test/secret-path');
     expect(page.url()).toBe(`chrome-extension://${extensionId}/blocked.html?c=adult`);

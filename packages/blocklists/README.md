@@ -5,6 +5,8 @@ Shared rule data for every Lumio Guard client (Chrome extension now, Android app
 - `categories.json` — the category ids, names and defaults.
 - `test/<category>.txt` — fake `.test` domains used for development and automated tests.
 
-Real lists will live in `sources/<category>/` with a `SOURCE.md` per list recording where
-it came from, its licence, the date pulled and the review done. Do not add a list without
-that record (handoff §11).
+- `sources.json` — upstream lists, pinned to an exact revision and checksum.
+- `curated/` — our own lists: Nigerian betting sites, and the never-block safety list.
+- `SOURCES.md` — where each list comes from, its licence and the review still needed.
+  Do not add a source without a row there (handoff §11).
+- `real/` — built by `npm run lists` in `extension/`. Not committed.

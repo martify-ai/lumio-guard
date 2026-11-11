@@ -1,0 +1,48 @@
+{
+  "note": "Upstream blocklists, pinned to an exact revision and checksum. Change a pin only after reviewing the new revision. See SOURCES.md.",
+  "sources": [
+    {
+      "id": "blp-porn",
+      "category": "adult",
+      "name": "The Block List Project — porn",
+      "homepage": "https://github.com/blocklistproject/Lists",
+      "licence": "Unlicense (public domain)",
+      "url": "https://raw.githubusercontent.com/blocklistproject/Lists/ee3bdbaddf49c756cf3340bb2e6a9dee5282d1c6/porn.txt",
+      "sha256": "425590c37e3ea624fdf646b14ba661f8b8f38391686adcf02b73f8b2d74b0db1",
+      "large": true
+    },
+    {
+      "id": "sinfonietta-porn",
+      "category": "adult",
+      "name": "Sinfonietta hostfiles — pornography-hosts",
+      "homepage": "https://github.com/Sinfonietta/hostfiles",
+      "licence": "MIT (c) 2016 Sinfonietta",
+      "url": "https://raw.githubusercontent.com/Sinfonietta/hostfiles/46f3097d7bcfc9eea323fe365074dfd771d0d17c/pornography-hosts",
+      "sha256": "d5c31a7ee9f1920df47044270449ad42a1b09ad4f3b608410383abaabb27fa1d",
+      "large": false
+    },
+    {
+      "id": "blp-gambling",
+      "category": "gambling",
+      "name": "The Block List Project — gambling",
+      "homepage": "https://github.com/blocklistproject/Lists",
+      "licence": "Unlicense (public domain)",
+      "url": "https://raw.githubusercontent.com/blocklistproject/Lists/ee3bdbaddf49c756cf3340bb2e6a9dee5282d1c6/gambling.txt",
+      "sha256": "d583202e86eb80f8cb6311e65d10f36e472d921d7cac5ff18e98d7dd0b9cf439",
+      "large": true
+    },
+    {
+      "id": "sinfonietta-gambling",
+      "category": "gambling",
+      "name": "Sinfonietta hostfiles — gambling-hosts",
+      "homepage": "https://github.com/Sinfonietta/hostfiles",
+      "licence": "MIT (c) 2016 Sinfonietta",
+      "url": "https://raw.githubusercontent.com/Sinfonietta/hostfiles/46f3097d7bcfc9eea323fe365074dfd771d0d17c/gambling-hosts",
+      "sha256": "55748e7fe622eb7552191f8d50e16b8a96d5a6c54b987f8696de369ecd9c3af0",
+      "large": false
+    }
+  ],
+  "curated": [
+    { "category": "gambling", "file": "curated/gambling-nigeria.txt" }
+  ]
+}

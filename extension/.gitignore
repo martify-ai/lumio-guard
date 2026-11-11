@@ -6,3 +6,4 @@ test-results/
 playwright-report/
 .browsers/
 dist-hooks/
+dist-e2e/
